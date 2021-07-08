@@ -4,13 +4,25 @@
   display: none;
   width: 800px;
   grid-gap: 4px;
+  grid-template-areas:"header"
+                      "nav"
+                      "sheet"
+                      "footer";
+}
+
+section.mission {
+  display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
-  grid-template-areas:"header  header  header  header header header"
-                      "ins   ins prw  prw  res res"
+  grid-gap: 4px;
+  grid-template-areas:"ins ins  prw prw  res res"
                       "power power power power inv inv"
                       "healing harm harm armour iskill iskill"
-                      "misc misc misc misc misc misc"
-                      "footer  footer  footer  footer footer footer";
+                      "misc misc misc misc misc misc";
+}
+section.downtime {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 4px;
 }
 
 /*-- sheet type switch --*/
@@ -64,31 +76,6 @@ input[name=attr_class_items][value=Soldier] ~ ul.soldier {
     display: block;
 }
 
-input[name=attr_class_power] ~ ul {
-    display: none;
-}
-input[name=attr_class_power][value=Controller] ~ ul.controller {
-    display: block;
-}
-input[name=attr_class_power][value=Engineer] ~ ul.eng {
-    display: block;
-}
-input[name=attr_class_power][value=Adept] ~ ul.adept {
-    display: block;
-}
-input[name=attr_class_power][value=Shadow] ~ ul.shadow {
-    display: block;
-}
-input[name=attr_class_power][value=Sniper] ~ ul.sniper {
-    display: block;
-}
-input[name=attr_class_power][value=Hacker] ~ ul.hacker {
-    display: block;
-}
-input[name=attr_class_power][value=Soldier] ~ ul.soldier {
-    display: block;
-}
-
 .director, .qm, .personnel, .ci, .analyst {display: none;}
 input[name=attr_class_role][value=Director] ~ .director {
     display: block;
@@ -104,6 +91,21 @@ input[name=attr_class_role][value=CounterIntel] ~ .ci {
 }
 input[name=attr_class_role][value=Analyst] ~ .analyst {
     display: block;
+}
+
+/*-- agent page switch --*/
+.secrets_page_nav { text-align: end;}
+input[name=attr_agent_nav] ~ section {
+    display:none;
+}
+input[name=attr_agent_nav][value=mission] ~ section.mission {
+    display:grid;
+}
+input[name=attr_agent_nav][value=settings] ~ section.settings {
+    display:block;
+}
+input[name=attr_agent_nav][value=downtime] ~ section.downtime {
+    display:grid;
 }
 /*----------------- GENERAL CSS ------------------*/
 /*----------------- GENERAL CSS ------------------*/
@@ -159,6 +161,7 @@ label.lbl {
 .harm { grid-area: harm;}
 .armour { grid-area: armour;}
 .iskill { grid-area: iskill;}
+.secrets_page_nav { grid-area: nav;}
 .footer {
   grid-area: footer;
   background-color: gray;
@@ -258,12 +261,14 @@ input[type=number]::-webkit-outer-spin-button {
 .xp-clear input, .btn-choice input, .ci-choice input {
     display:none;
 }
+.characterviewer label.btn-choice {
+    margin-bottom: 0;
+}
 .characterviewer label.btn-choice, .characterviewer label.ci-choice {
     border: 1px solid black;
     width: auto;
     padding: 0.25em 0.25em 0;
     border-radius: 3px;
-    margin-bottom: none;
     font-size: 1em;
     display: inline-block;
 }
@@ -314,6 +319,32 @@ input[type=number]::-webkit-outer-spin-button {
     margin: 0;
     padding: 0;
 }
+.power li p {
+    padding-left: 3ch;
+    text-indent: -3ch;
+}
+.power li button[type="roll"].broadcast {
+    position: absolute;
+    left: 0;
+    top: 1.5em;
+    padding: 0;
+    font-size: 100%;
+    width: 1em;
+    height: 1em;
+
+}
+
+.repcontainer[data-groupname="repeating_ability"] li textarea {
+    height: 1.5em;
+    border-width: 0 0 1px 0;
+    resize: none;
+    display: none;
+}
+
+.editmode[data-groupname="repeating_ability"] li textarea {
+    display:block;
+}
+
 .armor h3 {
     margin-bottom:0.5em;
 }
@@ -597,4 +628,28 @@ input[type=number]::-webkit-outer-spin-button {
 
 .sheet-rolltemplate-stability .inlinerollresult.fullfail {
     border: none;
+}
+/*-- roll template: broadcast --*/
+
+.sheet-rolltemplate-broadcast-ability {
+    border: 1px solid black;
+    background-color:white;
+    padding: 0.5em;
+}
+.sheet-rolltemplate-broadcast-ability h1 {
+    font-size: 130%;
+    line-height: 1em;
+}
+.sheet-rolltemplate-broadcast-ability h2 {
+    font-size: 120%;
+    border-bottom: 1px solid black;
+    padding-bottom: 0;
+    margin-top: 0;
+    margin-bottom: 0.5em;
+    font-variant: small-caps;
+}
+.sheet-rolltemplate-broadcast-ability h3 {
+    font-size: 100%;
+    margin-bottom: 0.5em;
+    font-variant: small-caps;
 }

@@ -1,6 +1,7 @@
-<input type="hidden" name="attr_version" value="1.11" />
+<input type="hidden" name="attr_version" value="1.13" />
 <input type="hidden" name="attr_sheet_type" value="choose" />
 <input type="hidden" name="attr_stress_max" value="8" />
+
 <div class="choose">
     <input type="hidden" name="attr_fsheet_type" value="agent" />
     <h1>Type of sheet</h1>
@@ -352,20 +353,73 @@
         <h1><span name="attr_class"></span></h1>
         <p>Name: <input name="attr_character_name" type="text" spellcheck="false"  /></p>
         <span class="xp stress xp-track">
-            <input type="radio" name="attr_stress" value="8" />
-            <input type="radio" name="attr_stress" value="7" />
-            <input type="radio" name="attr_stress" value="6" />
-            <input type="radio" name="attr_stress" value="5" />
-            <input type="radio" name="attr_stress" value="4" />
-            <input type="radio" name="attr_stress" value="3" />
-            <input type="radio" name="attr_stress" value="2" />
-            <input type="radio" name="attr_stress" value="1" />
+            <input type="radio" name="attr_stress" value="9" title="9 stress" hidden/>
+            <input type="radio" name="attr_stress" value="8" title="8 stress" />
+            <input type="radio" name="attr_stress" value="7" title="7 stress" />
+            <input type="radio" name="attr_stress" value="6" title="6 stress" />
+            <input type="radio" name="attr_stress" value="5" title="5 stress" />
+            <input type="radio" name="attr_stress" value="4" title="4 stress" />
+            <input type="radio" name="attr_stress" value="3" title="3 stress" />
+            <input type="radio" name="attr_stress" value="2" title="2 stress" />
+            <input type="radio" name="attr_stress" value="1" title="1 stress" />
         </span>
         <label class="xp-clear"><input type="radio" name="attr_stress" value="0" checked="true" />Clear Stress</label>
         <button type="roll" value="&amp;{template:action} {{name=@{character_name}}} {{attr=Fortune}} {{attr_num=[[?{Dice|0|1|2|3|4|5}]]}} {{zero=[[2d6kl1]]}} {{dice=[[(?{Dice|0|1|2|3|4|5})d6kh1]]}}">Fortune Roll</button>
-        <button type="roll" value="&amp;{template:stability} {{name=@{character_name}}} {{attr=Stability}} {{attr_num=[[@{stability}]]}} {{zero=[[2d6kl1]]}} {{stress=[[(@{stability})d6kh1]]}}">Stability Check</button>
-        <button name="act_heal" type="action">R &amp; R</button>
     </div>
+    <input type="hidden" name="attr_agent_nav" value="mission" />
+    <div class="secrets_page_nav">
+        <label class="btn-choice"><input type="radio" name="attr_agent_nav" value="mission"/><span>Mission</span></label>
+        <label class="btn-choice"><input type="radio" name="attr_agent_nav" value="downtime"/><span>Downtime</span></label>
+        <label class="btn-choice"><input type="radio" name="attr_agent_nav" value="settings"/><span>Settings</span></label>
+    </div>
+    <section class="settings">
+        <h1>Sheet settings</h1>
+        <li>Extra stress box (Spies *steady* upgrade)</li>
+        <li>Extra trauma</li>
+        <li>+1 resistance</li>
+        <li>Extra investigative skill</li>
+    </section>
+    <section class="downtime">
+        <div class="section">
+            <h2>Mission Rewards</h2>
+            <p>After the mission, mark as directed:</p>
+            <h3>Primary Mission</h3>
+            <p>If you were on the primary mission, mark xp as follows:</p>
+            <ul>
+                <li><span name="attr_xp_trigger"></span></li>
+                <li>You expressed your beliefs, drives, heritage, or background.</li>
+                <li>You struggled with issues from your stress or traumas.</li>
+            </ul>
+            <h3>Secondary Mission</h3>
+            <p>If you survived the secondary mission, you mark 2 xp.</p>
+            <p>You may also need to mark harm or stress.</p>
+            <h3>Skipped Mission</h3>
+            <p>Agents who skipped the mission get to take R &amp; R (rest and relaxation).</p>
+            <button name="act_heal" type="action">R &amp; R</button>
+            <p>This marks a healing tick and clears up to 3 stress.</p>
+        </div>
+        <div class="section">
+            <h2>Downtime Activities</h2>
+            <p>If you went on a mission, you can pursue one personal activity before your next mission.</p>
+            <h3>Assigned Downtime</h3>
+            <p><strong>If the Quartermaster assigns you to a project</strong>, you don't have time left for a personal activity.</p>
+            <h3>Seek Stability</h3>
+            <p>Visit your source of stability to relieve stress.</p>
+            <button type="roll" value="&amp;{template:stability} {{name=@{character_name}}} {{attr=Stability}} {{attr_num=[[@{stability}]]}} {{zero=[[2d6kl1]]}} {{stress=[[(@{stability})d6kh1]]}}">Stability Check</button>
+            <h3>Train</h3>
+            <p>Mark 1 XP in a selected track (Insight, Prowess, Resolve, or playbook advancement).</p>
+            <p><em>You can mark 2 XP for a track when your crew has unlocked the corresponding upgrade.</em></p>
+            <h3>Recover</h3>
+            <p>Seek treatment for your existing harm. Either roll using the quality level of the NPC treating you, or take one stress and roll 0d.</p>
+            <p>Poor - 0d, Standard - 1d, Fine - 2d, Exceptional - 3d.</p>
+            <button type="roll" value="&amp;{template:action} {{name=@{character_name}}} {{attr=Recovery}} {{attr_num=[[?{Dice|0|1|2|3|4|5}]]}} {{zero=[[2d6kl1]]}} {{dice=[[(?{Dice|0|1|2|3|4|5})d6kh1]]}}">Recovery Roll</button>
+            <p>Mark a number of segments on your healing clock. 1-3: one segment, 4/5: two segments, 6: three segments, critical: five segments.</p>
+            <p>When you fill your healing clock, reduce each instance of harm on your sheet by one level, then clear the clock. Extra segments "roll over".</p>
+            <h3>Crafting</h3>
+            <p>Work on a personal long-term project to creat</p>
+        </div>
+    </section>
+    <section class="mission">
     <div class="insight section">
         <input type="hidden" name="attr_insight" value="0" />
         <h3>Insight <button type="roll" title="Resist deception" value="&amp;{template:resist} {{name=@{character_name}}} {{attr=Insight}} {{attr_num=[[@{insight}]]}} {{zero=[[6-2d6kl1]]}} {{stress=[[6-(@{insight})d6kh1]]}}"></button><span class="xp xp-track" title="Insight XP">
@@ -417,83 +471,23 @@
     <div class="power section">
         <input name="attr_class_power" type="hidden" value="@{class}" disabled="true" />
         <h3>Special Abilities<span class="xp xp-track" title="Playbook XP">
-                <input type="radio" name="attr_xp_power" value="8" />
-                <input type="radio" name="attr_xp_power" value="7" />
-                <input type="radio" name="attr_xp_power" value="6" />
-                <input type="radio" name="attr_xp_power" value="5" />
-                <input type="radio" name="attr_xp_power" value="4" />
-                <input type="radio" name="attr_xp_power" value="3" />
-                <input type="radio" name="attr_xp_power" value="2" />
-                <input type="radio" name="attr_xp_power" value="1" />
+                <input type="radio" name="attr_xp_power" value="8" title="8 xp" />
+                <input type="radio" name="attr_xp_power" value="7" title="7 xp" />
+                <input type="radio" name="attr_xp_power" value="6" title="6 xp" />
+                <input type="radio" name="attr_xp_power" value="5" title="5 xp" />
+                <input type="radio" name="attr_xp_power" value="4" title="4 xp" />
+                <input type="radio" name="attr_xp_power" value="3" title="3 xp" />
+                <input type="radio" name="attr_xp_power" value="2" title="2 xp" />
+                <input type="radio" name="attr_xp_power" value="1" title="1 xp" />
             </span></h3>
             <label class="xp-clear"><input type="radio" name="attr_xp_power" value="0" checked="true" />Clear XP</label>
-    <ul class="controller">
-        <li> <label><input type="checkbox" name="attr_power_c1" value="1" /> Foresight</label> &mdash; Twice per mission you can assist a teammate without paying stress. Tell us how you prepared for it.</li>
-        <li> <label><input type="checkbox" name="attr_power_c2" value="1" /> Connected</label> &mdash; During downtime you get +1 result level when you acquire an asset or reduce heat.</li>
-        <li> <label><input type="checkbox" name="attr_power_c3" value="1" /> Time Manager</label> &mdash; Due to careful planning during downtime, you may give yourself or a teammate +1 downtime action.</li>
-        <li> <label><input type="checkbox" name="attr_power_c4" value="1" /> Mastermind</label> &mdash; You may use your special armor to protect a teammate, or push yourself when you gather info or work on a long-term project.</li>
-        <li> <label><input type="checkbox" name="attr_power_c5" value="1" /> Weaving the Web</label> &mdash; you gain +1d to Consort when you gather info on the target of a mission. You get +1d on the engagement for the mission.</li>
-        <li> <label><input type="checkbox" name="attr_power_c6" value="1" /> Head of the Snake</label> &mdash; When you lead a group action, you only mark stress for PCs that rolled a 1 or 2 as their result. You may adjust the entanglement roll by 1 (up or down).</li>
-        <li> <label><input type="checkbox" name="attr_power_c7" value="1" /> Like Looking into a Mirror</label> &mdash; You can always tell when someone is lying to you.</li>
-</ul>
-    <ul class="adept">
-        <li> <label><input type="checkbox" name="attr_power_a1" value="1" /> Arcane Mind</label> &mdash; Twice per mission you can assist a teammate without paying stress. Tell us how you prepared for it.</li>
-        <li> <label><input type="checkbox" name="attr_power_a2" value="1" /> Warded</label> &mdash; During downtime you get +1 result level when you acquire an asset or reduce heat.</li>
-        <li> <label><input type="checkbox" name="attr_power_a3" value="1" /> Iron Will</label> &mdash; You are immune to the terror that some supernatural entities inflict on sight. When you make a resistance roll with Resolve, take +1d.</li>
-        <li> <label><input type="checkbox" name="attr_power_a4" value="1" /> Mesmerism</label> &mdash; When you Sway someone, you may cause them to forget that it’s happened until they next interact with you.</li>
-        <li> <label><input type="checkbox" name="attr_power_a5" value="1" /> Spellcaster</label> &mdash; You get +1 result level when you work on a long term project to learn a spell. You begin with two spells already known.</li>
-        <li> <label><input type="checkbox" name="attr_power_a6" value="1" /> Enchanter</label> &mdash; When you invent or craft a creation with arcane features, you get +1 effect level. You begin with one arcane design already known.</li>
-        <li> <label><input type="checkbox" name="attr_power_a7" value="1" /> Tempest</label> &mdash; You can push yourself to do one of the following: unleash a stroke of lightning as a weapon — summon a storm in your immediate vicinity</li>
-</ul>
-<ul class="eng">
-        <li><label><input type="checkbox" name="attr_power_e1" value="1" />  Electrician</label> &mdash; When you invent or craft a creation with electrical features, take +1 effect level to your roll (a 1-3 beciomes a 4-5, etc). You begin with one design already known.</li>
-        <li><label><input type="checkbox" name="attr_power_e2" value="1" />  Devil’s Footsteps</label> &mdash; You can push yourself to do one of the following: <i>perform a feat of athletics that verges on the superhuman—maneuver to confuse your enemies so they mistakenly attack each other</i>.</li>
-        <li><label><input type="checkbox" name="attr_power_e3" value="1" />  Jury Rigger</label> &mdash; You don’t incur flashback costs for two gadgets per mission. You get +1d when you roll to resist consequences of improvised gadgets.</li>
-        <li><label><input type="checkbox" name="attr_power_e4" value="1" />  Saboteur</label> &mdash; When you Wreck, your work is much quieter than it should be and the damage is very well-hidden from casual inspection.</li>
-        <li><label><input type="checkbox" name="attr_power_e5" value="1" />  Physician</label> &mdash; You can Tinker bones, blood, and bodily fluids to treat wounds, perform surgery, or stabilize the dying. You may Study an ailment or corpse. Everyone in your crew (including you) gets +1d to their healing treatment rolls.</li>
-        <li><label><input type="checkbox" name="attr_power_e6" value="1" />  Fortitude</label> &mdash; You may expend your special armor to resist a consequence of fatigue, weakness, or chemical effects, or to push yourself when working with technical skill or handling chemicals.</li>
-        <li><label><input type="checkbox" name="attr_power_e7" value="1" />  Subterfuge</label> &mdash; You may expend your special armor to resist a consequence from suspicion or persuasion, or to push yourself for subterfuge.</li>
-</ul>
-
-<ul class="shadow">
-        <li><label><input type="checkbox" name="attr_power_sh1" value="1" />  Infiltrator</label> &mdash; You are not affected by quality or Tier when you bypass security measures.</li>
-        <li><label><input type="checkbox" name="attr_power_sh2" value="1" />  Shadow</label> &mdash; You may expend your special armor to resist a consequence from detection or security measures, or to push yourself for a feat of athletics or stealth.</li>
-        <li><label><input type="checkbox" name="attr_power_sh3" value="1" />  Reflexes</label> &mdash; When there’s a question about who acts first, the answer is you.</li>
-        <li><label><input type="checkbox" name="attr_power_sh4" value="1" />  Daredevil</label> &mdash; When you roll a desperate action, you get +1d to your roll if you also take -1d to any resistance rolls against consequences from your action.</li>
-        <li><label><input type="checkbox" name="attr_power_sh5" value="1" />  Rook’s Gambit</label> &mdash; Take 2 stress to roll your best action rating while performing a different action. Say how you adapt your skill to this use.</li>
-        <li><label><input type="checkbox" name="attr_power_sh6" value="1" />  Trust in Me</label> &mdash; You get +1d vs. a target with whom you have an intimate relationship.</li>
-        <li><label><input type="checkbox" name="attr_power_sh7" value="1" />  Master of Disguise</label> &mdash; When you use a disguise or other form of covert misdirection you get +1 effect level. When you throw off your disguise, the resulting surprise gives you the initiative in the situation.</li>
-</ul>
-<ul class="sniper">
-        <li><label><input type="checkbox" name="attr_power_sn1" value="1" />  Sharpshooter</label> &mdash; You can push yourself to do one of the following: make a ranged attack at extreme distance beyond what’s normal for the weapon—unleash a barrage of rapid fire to suppress the enemy.</li>
-        <li><label><input type="checkbox" name="attr_power_sn2" value="1" />  Scout</label> &mdash; When you gather info to locate a target, you get +1 effect. When you hide in a prepared position or use camouflage, you get +1d to rolls to avoid detection.</li>
-        <li><label><input type="checkbox" name="attr_power_sn3" value="1" />  Focused</label> &mdash; You may expend your special armor to resist a consequence of surprise or mental harm (fear, confusion, losing track of someone) or to push yourself for ranged combat or tracking.</li>
-        <li><label><input type="checkbox" name="attr_power_sn4" value="1" />  Ambush</label> &mdash; When you attack from hiding or spring a trap, you get +1d to your roll.</li>
-        <li><label><input type="checkbox" name="attr_power_sn5" value="1" />  Tough as nails</label> &mdash; Penalties from harm are one level less severe (though level 4 harm is still fatal).</li>
-        <li><label><input type="checkbox" name="attr_power_sn6" value="1" />  Vengeful</label> &mdash; You gain an additional xp trigger: You got payback against someone who harmed you or someone you care about. <i>If your crew helped you get payback, also mark crew xp.</i></li>
-        <li><label><input type="checkbox" name="attr_power_sn7" value="1" />  Cover Fire</label> &mdash; When you wield multiple ranged weapons, the scale of your attacks increases. When you unleash a barrage of rapid fire at an enemy, you get +1d to suppress them.</li>
-</ul>
-<ul class="hacker">
-        <li><label><input type="checkbox" name="attr_power_h1" value="1" />  Quick Study</label> &mdash; When you Study to identify or exploit weakness during a mission, you get +1 effect level. When you train the same thing a second time during downtime, you earn 1 XP.</li>
-        <li><label><input type="checkbox" name="attr_power_h2" value="1" />  Whiz</label> &mdash; You can push yourself to do one of the following: completely ignore distractions (real or virtual) — disrupt wireless communications in an area.</li>
-        <li><label><input type="checkbox" name="attr_power_h3" value="1" />  Analyst</label> &mdash; During downtime, you get two ticks to distribute among any long term project clocks that involve investigation or learning a new program or design plan.</li>
-        <li><label><input type="checkbox" name="attr_power_h4" value="1" />  Digital ward</label> &mdash; When you Wreck a computer or network, ruining it for any other use, it becomes either anathema or enticing to computer viruses and other hackers.</li>
-        <li><label><input type="checkbox" name="attr_power_h5" value="1" />  White noise generator</label> &mdash; You may interfere with surveillance tech, becoming shadowy and insubstantial on all recordings for a few moments. Take 2 stress when you activate this ability, plus one stress for each extra feature. <i>It lasts for a few minutes rather than moments — you are invisible rather than shadowy — it affects human senses as well</i></li>
-        <li><label><input type="checkbox" name="attr_power_h6" value="1" />  Multitasker</label> &mdash; You can push yourself to do one of the following: <i>control a small group of rigged machines as easily as one — perform non-VR actions while in VR without disconnecting.</i></li>
-        <li><label><input type="checkbox" name="attr_power_h7" value="1" />  Search Protocol</label> &mdash; You have access to the best tech expertise. Take +1d to gather information about technology by any means.</li>
-</ul>
-<ul class="soldier">
-        <li><label><input type="checkbox" name="attr_power_so1" value="1" />  Battleborn</label> &mdash; You may expend your special armor to reduce harm from an attack in combat or to push yourself during a fight.</li>
-        <li><label><input type="checkbox" name="attr_power_so2" value="1" />  Bodyguard</label> &mdash; When you protect a teammate, take +1d to your resistance roll. When you gather info to anticipate possible threats in the current situation, you get +1 effect.</li>
-        <li><label><input type="checkbox" name="attr_power_so3" value="1" />  Leader</label> &mdash; When you Command a cohort in combat, they continue to fight when they would otherwise break (they’re not taken out when they suffer level 3 harm). They gain +1 effect and 1 armor.</li>
-        <li><label><input type="checkbox" name="attr_power_so4" value="1" />  Mule</label> &mdash; Your load limits are higher. Light: 5. Normal: 7. Heavy: 8.</li>
-        <li><label><input type="checkbox" name="attr_power_so5" value="1" />  Not to be trifled with</label> &mdash; You can push yourself to do one of the following: <i>perform a feat of physical force that verges on the superhuman—engage a small gang on equal footing in close combat.</i></li>
-        <li><label><input type="checkbox" name="attr_power_so6" value="1" />  Savage</label> &mdash; When you unleash physical violence, it’s especially frightening. When you Command a frightened target, take +1d.</li>
-        <li><label><input type="checkbox" name="attr_power_so7" value="1" />  Vigourous</label> &mdash; You recover from harm faster. Permanently fill in one of your healing clock segments. Take +1d to healing treatment rolls.</li>
-</ul>
-      <fieldset class="repeating_power">
-          <textarea name="attr_power" type="text"></textarea>
-      </fieldset>
+        <ul>
+        <fieldset class="repeating_ability">
+            <li> <p><label><input type="checkbox" name="attr_powercheck" value="1" /> <span name="attr_power"></span></label> &mdash; <span name="attr_powerdesc"></span><button type="roll" class="broadcast" value="&amp;{template:broadcast-ability} {{name=@{character_name}}} {{playbook=@{class}}} {{title=@{power}}} {{desc=@{powerdesc}}}" title="Send details to chat">Share</button></p>
+            <textarea name="attr_power" type="text"></textarea>
+            </li>
+        </fieldset>
+        </ul>
     </div>
     <div class="inv section">
         <h3>Load<button style="float:right;height:1em;" type="action" name="act_clearinv">Clear</button></h3>
@@ -613,6 +607,41 @@
         </div>
         <div class="iskill section">
             <h3>Investigative Skills</h3>
+            <datalist id="inv_skills">
+                <option>Accounting</option>
+                <option>Archaelogy</option>
+                <option>Architecture</option>
+                <option>Art History</option>
+                <option>Astronomy</option>
+                <option>Bureaucracy</option>
+                <option>Chemistry</option>
+                <option>Criminology</option>
+                <option>Cryptography</option>
+                <option>Data Recovery</option>
+                <option>Diagnosis</option>
+                <option>Electronic Surveillance</option>
+                <option>Forensic Pathology</option>
+                <option>Forgery</option>
+                <option>Fringe Science</option>
+                <option>High Society</option>
+                <option>History</option>
+                <option>Human Terrain</option>
+                <option>Languages</option>
+                <option>Law</option>
+                <option>Military Science</option>
+                <option>Occult Studies</option>
+                <option>Outdoor Survival</option>
+                <option>Pharmacy</option>
+                <option>Photography</option>
+                <option>Physics</option>
+                <option>Research</option>
+                <option>Streetwise</option>
+                <option>Tradecraft</option>
+                <option>Traffic Analysis</option>
+                <option>Urban Survival</option>
+                <option>Vampirology</option>
+            </datalist>
+            <p><input type="text" name="attr_skill_D" list="inv_skills" /></p>
             <p><select name="attr_skill_A">
                 <option value="">-- select a skill --</option>
                 <option>Accounting</option>
@@ -723,8 +752,9 @@
       <label>Notes</label>
       <textarea name="attr_notes"></textarea>
     </div>
+    </section>
     <div class="footer flex-col">
-      <span>Generic copyright disclaimer</span>
+      <span>Copyright 2017 John C Barstow</span>
     </div>
 </div>
 <rolltemplate class="sheet-rolltemplate-action">
@@ -796,7 +826,146 @@
 <h3>Clear {{zero}} stress</h3>
 {{/rollLess() attr_num 1}}
 </rolltemplate>
+<rolltemplate class="sheet-rolltemplate-broadcast-ability">
+<h1>{{name}}</h1>
+<h2>{{playbook}}</h2>
+<h3>{{title}}</h3>
+<p>{{desc}}</p>
+</rolltemplate>
 <script type="text/worker">
+const playbookData = {
+    Controller: {
+      startingActions: { study: 1, consort: 2 },
+      abilities: {
+        "Foresight": "Twice per mission you can assist a teammate without paying stress. Tell us how you prepared for it.",
+        "Connected": "During downtime you get +1 result level when you acquire an asset or reduce heat.",
+        "Time Manager": "Due to careful planning during downtime, you may give yourself, the Quartermaster, or a teammate +1 downtime action.",
+        "Mastermind": "You may use your special armor to protect a teammate, or push yourself when you gather info or work on a long-term project.",
+        "Weaving the Web": "You gain +1d to Consort when you gather info on the target of a mission. You get +1d on the engagement for the mission.",
+        "Head of the Snake": "When you lead a group action, you only mark stress for PCs that rolled a 1 or 2 as their result. You may adjust the entanglement roll by 1 (up or down).",
+        "Like Looking into a Mirror": "You can always tell when someone is lying to you.",
+      },
+      xp_trigger: "You address a challenge with calculation or networking."
+    },
+    Adept: {
+      startingActions: { study: 1, attune: 2 },
+      abilities: {
+        "Arcane Mind":"Twice per mission you can assist a teammate without paying stress. Tell us how you prepared for it.",
+        "Warded":"During downtime you get +1 result level when you acquire an asset or reduce heat.",
+        "Iron Will":"You are immune to the terror that some supernatural entities inflict on sight. When you make a resistance roll with Resolve, take +1d.",
+        "Mesmerism":"When you Sway someone, you may cause them to forget that it’s happened until they next interact with you.",
+        "Spellcaster":"You get +1 result level when you work on a long term project to learn a spell. You begin with two spells already known.",
+        "Enchanter":"When you invent or craft a creation with arcane features, you get +1 effect level. You begin with one arcane design already known.",
+        "Tempest":"You can push yourself to do one of the following: unleash a stroke of lightning as a weapon — summon a storm in your immediate vicinity",
+      },
+      xp_trigger: "You address a challenge with knowledge or arcane power."
+    },
+    Engineer: {
+      startingActions: { tinker: 1, wreck: 2 },
+      abilities: {
+        "Electrician":"When you invent or craft a creation with electrical features, take +1 effect level to your roll (a 1-3 beciomes a 4-5, etc). You begin with one design already known.",
+        "Devil’s Footsteps":"You can push yourself to do one of the following: <i>perform a feat of athletics that verges on the superhuman—maneuver to confuse your enemies so they mistakenly attack each other</i>.",
+        "Jury Rigger":"You don’t incur flashback costs for two gadgets per mission. You get +1d when you roll to resist consequences of improvised gadgets.",
+        "Saboteur":"When you Wreck, your work is much quieter than it should be and the damage is very well-hidden from casual inspection.",
+        "Physician":"You can Tinker bones, blood, and bodily fluids to treat wounds, perform surgery, or stabilize the dying. You may Study an ailment or corpse. Everyone in your crew (including you) gets +1d to their healing treatment rolls.",
+        "Fortitude":"You may expend your special armor to resist a consequence of fatigue, weakness, or chemical effects, or to push yourself when working with technical skill or handling chemicals.",
+        "Subterfuge":"You may expend your special armor to resist a consequence from suspicion or persuasion, or to push yourself for subterfuge.",
+      },
+      xp_trigger: "You address a challenge with technical skill or by causing mayhem."
+    },
+    Shadow: {
+      startingActions: { },
+      abilities: {
+        "Infiltrator":"You are not affected by quality when you bypass security measures.",
+        "Shadow":"You may expend your special armor to resist a consequence from detection or security measures, or to push yourself for a feat of athletics or stealth.",
+        "Reflexes":"When there’s a question about who acts first, the answer is you.",
+        "Daredevil":"When you roll a desperate action, you get +1d to your roll if you also take -1d to any resistance rolls against consequences from your action.",
+        "Rook’s Gambit":"Take 2 stress to roll your best action rating while performing a different action. Say how you adapt your skill to this use.",
+        "Trust in Me":"You get +1d vs. a target with whom you have an intimate relationship.",
+        "Master of Disguise":"When you use a disguise or other form of covert misdirection you get +1 effect level. When you throw off your disguise, the resulting surprise gives you the initiative in the situation.",
+      },
+      xp_trigger: ""
+    },
+    Sniper: {
+      startingActions: { },
+      abilities: {
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+      },
+      xp_trigger: ""
+    },
+    Hacker: {
+      startingActions: { },
+      abilities: {
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+      },
+      xp_trigger: ""
+    },
+    Soldier: {
+      startingActions: { },
+      abilities: {
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+        "":"",
+      },
+      xp_trigger: ""
+    },
+};
+/*
+<ul class="sniper">
+        <li><label><input type="checkbox" name="attr_power_sn1" value="1" />  Sharpshooter</label> &mdash; You can push yourself to do one of the following: make a ranged attack at extreme distance beyond what’s normal for the weapon—unleash a barrage of rapid fire to suppress the enemy.</li>
+        <li><label><input type="checkbox" name="attr_power_sn2" value="1" />  Scout</label> &mdash; When you gather info to locate a target, you get +1 effect. When you hide in a prepared position or use camouflage, you get +1d to rolls to avoid detection.</li>
+        <li><label><input type="checkbox" name="attr_power_sn3" value="1" />  Focused</label> &mdash; You may expend your special armor to resist a consequence of surprise or mental harm (fear, confusion, losing track of someone) or to push yourself for ranged combat or tracking.</li>
+        <li><label><input type="checkbox" name="attr_power_sn4" value="1" />  Ambush</label> &mdash; When you attack from hiding or spring a trap, you get +1d to your roll.</li>
+        <li><label><input type="checkbox" name="attr_power_sn5" value="1" />  Tough as nails</label> &mdash; Penalties from harm are one level less severe (though level 4 harm is still fatal).</li>
+        <li><label><input type="checkbox" name="attr_power_sn6" value="1" />  Vengeful</label> &mdash; You gain an additional xp trigger: You got payback against someone who harmed you or someone you care about. <i>If your crew helped you get payback, also mark crew xp.</i></li>
+        <li><label><input type="checkbox" name="attr_power_sn7" value="1" />  Cover Fire</label> &mdash; When you wield multiple ranged weapons, the scale of your attacks increases. When you unleash a barrage of rapid fire at an enemy, you get +1d to suppress them.</li>
+</ul>
+<ul class="hacker">
+        <li><label><input type="checkbox" name="attr_power_h1" value="1" />  Quick Study</label> &mdash; When you Study to identify or exploit weakness during a mission, you get +1 effect level. When you train the same thing a second time during downtime, you earn 1 XP.</li>
+        <li><label><input type="checkbox" name="attr_power_h2" value="1" />  Whiz</label> &mdash; You can push yourself to do one of the following: completely ignore distractions (real or virtual) — disrupt wireless communications in an area.</li>
+        <li><label><input type="checkbox" name="attr_power_h3" value="1" />  Analyst</label> &mdash; During downtime, you get two ticks to distribute among any long term project clocks that involve investigation or learning a new program or design plan.</li>
+        <li><label><input type="checkbox" name="attr_power_h4" value="1" />  Digital ward</label> &mdash; When you Wreck a computer or network, ruining it for any other use, it becomes either anathema or enticing to computer viruses and other hackers.</li>
+        <li><label><input type="checkbox" name="attr_power_h5" value="1" />  White noise generator</label> &mdash; You may interfere with surveillance tech, becoming shadowy and insubstantial on all recordings for a few moments. Take 2 stress when you activate this ability, plus one stress for each extra feature. <i>It lasts for a few minutes rather than moments — you are invisible rather than shadowy — it affects human senses as well</i></li>
+        <li><label><input type="checkbox" name="attr_power_h6" value="1" />  Multitasker</label> &mdash; You can push yourself to do one of the following: <i>control a small group of rigged machines as easily as one — perform non-VR actions while in VR without disconnecting.</i></li>
+        <li><label><input type="checkbox" name="attr_power_h7" value="1" />  Search Protocol</label> &mdash; You have access to the best tech expertise. Take +1d to gather information about technology by any means.</li>
+</ul>
+<ul class="soldier">
+        <li><label><input type="checkbox" name="attr_power_so1" value="1" />  Battleborn</label> &mdash; You may expend your special armor to reduce harm from an attack in combat or to push yourself during a fight.</li>
+        <li><label><input type="checkbox" name="attr_power_so2" value="1" />  Bodyguard</label> &mdash; When you protect a teammate, take +1d to your resistance roll. When you gather info to anticipate possible threats in the current situation, you get +1 effect.</li>
+        <li><label><input type="checkbox" name="attr_power_so3" value="1" />  Leader</label> &mdash; When you Command a cohort in combat, they continue to fight when they would otherwise break (they’re not taken out when they suffer level 3 harm). They gain +1 effect and 1 armor.</li>
+        <li><label><input type="checkbox" name="attr_power_so4" value="1" />  Mule</label> &mdash; Your load limits are higher. Light: 5. Normal: 7. Heavy: 8.</li>
+        <li><label><input type="checkbox" name="attr_power_so5" value="1" />  Not to be trifled with</label> &mdash; You can push yourself to do one of the following: <i>perform a feat of physical force that verges on the superhuman—engage a small gang on equal footing in close combat.</i></li>
+        <li><label><input type="checkbox" name="attr_power_so6" value="1" />  Savage</label> &mdash; When you unleash physical violence, it’s especially frightening. When you Command a frightened target, take +1d.</li>
+        <li><label><input type="checkbox" name="attr_power_so7" value="1" />  Vigourous</label> &mdash; You recover from harm faster. Permanently fill in one of your healing clock segments. Take +1d to healing treatment rolls.</li>
+</ul>*/
+function initPlaybook(playbook) {
+    const data = playbookData[playbook];
+    let newAbilities = {...data.startingActions};
+    for(let [name, desc] of Object.entries(data.abilities)) {
+        let newID = generateRowID();
+        newAbilities[`repeating_ability_${newID}_power`] = name;
+        newAbilities[`repeating_ability_${newID}_powerdesc`] = desc;
+    }
+    newAbilities["xp_trigger"] = data.xp_trigger;
+    console.log(newAbilities);
+    setAttrs(newAbilities);
+}
 on( "change:hunt change:study change:survey change:tinker", function() {
    getAttrs(["hunt", "study", "survey", "tinker"], function(values) {
     let val = Object.keys(values).filter(key => values[key] > 0).length;
@@ -835,6 +1004,8 @@ on("clicked:confirmtype", function() {
                 break;
         }
         setAttrs({sheet_type: values.fsheet_type, "character_name": name});
+        if (sheet === "agent")
+            initPlaybook(cls);
     });
 });
 on("clicked:heal", function () {
